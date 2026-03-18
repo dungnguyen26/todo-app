@@ -12,16 +12,14 @@ body {
     background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
-/* WRAPPER */
 .wrapper {
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-/* BOX CHUNG */
 .box {
     background: white;
     padding: 25px;
@@ -29,7 +27,6 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* ===== PT BẬC 2 ===== */
 h2 {
     text-align: center;
 }
@@ -40,10 +37,10 @@ h2 {
     padding: 12px;
     border-radius: 8px;
     margin-bottom: 15px;
-    font-size: 14px;
     border-left: 4px solid #667eea;
 }
 
+/* PT */
 .form-group {
     margin: 10px 0;
     display: flex;
@@ -55,15 +52,13 @@ h2 {
     padding: 6px;
 }
 
-button {
+.solve-btn {
     width: 100%;
-    padding: 10px;
-    margin-top: 10px;
     background: #4CAF50;
     color: white;
+    padding: 10px;
     border: none;
     border-radius: 6px;
-    cursor: pointer;
 }
 
 .ketqua {
@@ -72,15 +67,22 @@ button {
     font-weight: bold;
 }
 
-/* ===== TODO ===== */
+/* TODO */
 .form {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
     margin-bottom: 10px;
 }
 
 .form input {
-    flex: 1;
+    padding: 8px;
+}
+
+.add-btn {
+    background: #667eea;
+    color: white;
+    border: none;
     padding: 8px;
 }
 
@@ -93,12 +95,17 @@ button {
 .filters button {
     flex: 1;
     background: #667eea;
+    color: white;
+    border: none;
+    padding: 8px;
 }
 
+/* GRID */
 .header, .task {
     display: grid;
-    grid-template-columns: 2fr 1fr 80px 80px;
+    grid-template-columns: 60px 2fr 2fr 120px 80px;
     align-items: center;
+    text-align: center;
 }
 
 .header {
@@ -116,8 +123,25 @@ button {
     color: gray;
 }
 
+.status-btn {
+    background: orange;
+    color: white;
+    border: none;
+    padding: 5px;
+}
+
+.done-btn {
+    background: green;
+    color: white;
+    border: none;
+    padding: 5px;
+}
+
 .delete-btn {
     background: red;
+    color: white;
+    border: none;
+    padding: 5px;
 }
 </style>
 </head>
@@ -126,89 +150,88 @@ button {
 
 <div class="wrapper">
 
-    <!-- BOX 1: GIẢI PT -->
-    <div class="box">
-        <h2>Giải phương trình bậc 2</h2>
+<!-- GIẢI PT -->
+<div class="box">
+    <h2>Giải phương trình bậc 2</h2>
 
-        <div class="debai">
-            <b>📘 Đề bài:</b><br>
-            Nhập 3 số <b>a, b, c</b>. Giải phương trình:<br>
-            <b>ax² + bx + c = 0</b>
-        </div>
-
-        <div class="form-group">
-            <label>a:</label>
-            <input type="number" id="a">
-        </div>
-
-        <div class="form-group">
-            <label>b:</label>
-            <input type="number" id="b">
-        </div>
-
-        <div class="form-group">
-            <label>c:</label>
-            <input type="number" id="c">
-        </div>
-
-        <button onclick="giai()">Giải</button>
-
-        <div class="ketqua" id="ketqua"></div>
+    <div class="debai">
+        <b>📘 Đề bài:</b><br>
+        Nhập a, b, c. Giải: <b>ax² + bx + c = 0</b>
     </div>
 
-    <!-- BOX 2: TODO -->
-    <div class="box">
-        <h2>🚀 To-Do List by Dũng Nguyễn</h2>
-
-        <div class="form">
-            <input type="text" id="taskName" placeholder="Tên công việc">
-            <input type="date" id="deadline">
-            <button onclick="addTask()">Thêm</button>
-        </div>
-
-        <div class="filters">
-            <button onclick="setFilter('all')">Tất cả</button>
-            <button onclick="setFilter('done')">Hoàn thành</button>
-            <button onclick="setFilter('todo')">Chưa xong</button>
-        </div>
-
-        <div class="header">
-            <div>Tên</div>
-            <div>Deadline</div>
-            <div>✔</div>
-            <div>Xóa</div>
-        </div>
-
-        <div id="taskList"></div>
+    <div class="form-group">
+        <label>a:</label>
+        <input type="number" id="a">
     </div>
+
+    <div class="form-group">
+        <label>b:</label>
+        <input type="number" id="b">
+    </div>
+
+    <div class="form-group">
+        <label>c:</label>
+        <input type="number" id="c">
+    </div>
+
+    <button class="solve-btn" onclick="giai()">Giải</button>
+    <div class="ketqua" id="ketqua"></div>
+</div>
+
+<!-- TODO -->
+<div class="box">
+    <h2>⏳ To-Do List by Dũng Nguyễn </h2>
+
+    <div class="form">
+        <input type="text" id="taskName" placeholder="Tên công việc">
+        <input type="date" id="deadline">
+        <input type="time" id="startTime">
+        <input type="time" id="endTime">
+        <button class="add-btn" onclick="addTask()">Thêm</button>
+    </div>
+
+    <div class="filters">
+        <button onclick="setFilter('all')">Tất cả</button>
+        <button onclick="setFilter('done')">Hoàn thành</button>
+        <button onclick="setFilter('todo')">Chưa xong</button>
+    </div>
+
+    <div class="header">
+        <div>STT</div>
+        <div>Tên</div>
+        <div>Thời gian</div>
+        <div>Trạng thái</div>
+        <div>Xóa</div>
+    </div>
+
+    <div id="taskList"></div>
+</div>
 
 </div>
 
 <script>
 // ===== GIẢI PT =====
 function giai() {
-    let a = parseFloat(document.getElementById("a").value);
-    let b = parseFloat(document.getElementById("b").value);
-    let c = parseFloat(document.getElementById("c").value);
+    let aVal = parseFloat(document.getElementById("a").value);
+    let bVal = parseFloat(document.getElementById("b").value);
+    let cVal = parseFloat(document.getElementById("c").value);
 
-    if (isNaN(a) || isNaN(b) || isNaN(c)) {
-        ketqua.innerHTML = "⚠️ Nhập đầy đủ!";
+    if (isNaN(aVal) || isNaN(bVal) || isNaN(cVal)) {
+        ketqua.innerHTML = "⚠️ Nhập đủ!";
         return;
     }
 
-    if (a == 0) {
-        ketqua.innerHTML = "PT bậc 1: x = " + (-c/b);
+    if (aVal == 0) {
+        ketqua.innerHTML = "PT bậc 1: x = " + (-cVal/bVal);
         return;
     }
 
-    let d = b*b - 4*a*c;
+    let d = bVal*bVal - 4*aVal*cVal;
 
     if (d > 0) {
-        let x1 = (-b + Math.sqrt(d))/(2*a);
-        let x2 = (-b - Math.sqrt(d))/(2*a);
-        ketqua.innerHTML = `Hai nghiệm: x1 = ${x1}, x2 = ${x2}`;
+        ketqua.innerHTML = `x1=${(-bVal+Math.sqrt(d))/(2*aVal)}, x2=${(-bVal-Math.sqrt(d))/(2*aVal)}`;
     } else if (d == 0) {
-        ketqua.innerHTML = "Nghiệm kép: x = " + (-b/(2*a));
+        ketqua.innerHTML = "x=" + (-bVal/(2*aVal));
     } else {
         ketqua.innerHTML = "Vô nghiệm";
     }
@@ -223,22 +246,24 @@ function save() {
 }
 
 function addTask() {
-    let name = taskName.value;
-    let deadline = document.getElementById("deadline").value;
+    let name = document.getElementById("taskName").value;
+    let deadlineValue = document.getElementById("deadline").value;
+    let start = document.getElementById("startTime").value;
+    let end = document.getElementById("endTime").value;
 
-    if (!name || !deadline) return;
+    if (!name || !deadlineValue || !start || !end) {
+        alert("Nhập đủ nhé!");
+        return;
+    }
 
-    tasks.push({name, deadline, done:false});
+    tasks.push({ name, deadline: deadlineValue, start, end, done:false });
     save();
     render();
 
-    taskName.value = "";
-    deadline.value = "";
-}
-
-function setFilter(f) {
-    filter = f;
-    render();
+    document.getElementById("taskName").value = "";
+    document.getElementById("deadline").value = "";
+    document.getElementById("startTime").value = "";
+    document.getElementById("endTime").value = "";
 }
 
 function toggleTask(i) {
@@ -253,6 +278,11 @@ function deleteTask(i) {
     render();
 }
 
+function setFilter(f) {
+    filter = f;
+    render();
+}
+
 function render() {
     let list = document.getElementById("taskList");
     list.innerHTML = "";
@@ -263,10 +293,21 @@ function render() {
 
         list.innerHTML += `
         <div class="task">
+            <div>${i+1}</div>
             <div class="${t.done?'done':''}">${t.name}</div>
-            <div class="${t.done?'done':''}">${t.deadline}</div>
-            <div><input type="checkbox" ${t.done?'checked':''} onclick="toggleTask(${i})"></div>
-            <div><button class="delete-btn" onclick="deleteTask(${i})">X</button></div>
+            <div class="${t.done?'done':''}">
+                ${t.deadline}<br>
+                ${t.start} - ${t.end}
+            </div>
+            <div>
+                <button class="${t.done?'done-btn':'status-btn'}"
+                    onclick="toggleTask(${i})">
+                    ${t.done ? 'Xong' : 'Chưa xong'}
+                </button>
+            </div>
+            <div>
+                <button class="delete-btn" onclick="deleteTask(${i})">X</button>
+            </div>
         </div>`;
     });
 }
