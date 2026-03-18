@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List Pro</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef2f7;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        input, button, select {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .delete-btn {
+            background: red;
+            color: white;
+        }
+
+        .filters button {
+            background: #007bff;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .done {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📋 To-Do List PRO</h2>
+
+    <input type="text" id="taskName" placeholder="Tên công việc">
+    <input type="date" id="deadline">
+    <button class="add-btn" onclick="addTask()">Thêm</button>
+
+    <div class="filters">
+        <button onclick="filterTasks('all')">Tất cả</button>
+        <button onclick="filterTasks('done')">Hoàn thành</button>
+        <button onclick="filterTasks('todo')">Chưa xong</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Deadline</th>
+                <th>✔</th>
+                <th>Xóa</th>
+            </tr>
+        </thead>
+        <tbody id="taskList"></tbody>
+    </table>
+</div>
+
+<script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let currentFilter = "all";
+
+    function saveTasks() {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function addTask() {
+        let name = document.getElementById("taskName").value;
+        let deadline = document.getElementById("deadline").value;
+
+        if (!name || !deadline) {
+            alert("Nhập đầy đủ nhé!");
+            return;
+        }
+
+        tasks.push({
+            name,
+            deadline,
+            done: false
+        });
+
+        saveTasks();
+        renderTasks();
+
+        document.getElementById("taskName").value = "";
+        document.getElementById("deadline").value = "";
+    }
+
+    function toggleTask(index) {
+        tasks[index].done = !tasks[index].done;
+        saveTasks();
+        renderTasks();
+    }
+
+    function deleteTask(index) {
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+    }
+
+    function filterTasks(type) {
+        currentFilter = type;
+        renderTasks();
+    }
+
+    function renderTasks() {
+        let list = document.getElementById("taskList");
+        list.innerHTML = "";
+
+        tasks.forEach((task, index) => {
+
+            if (currentFilter === "done" && !task.done) return;
+            if (currentFilter === "todo" && task.done) return;
+
+            let row = `
+                <tr>
+                    <td class="${task.done ? 'done' : ''}">${task.name}</td>
+                    <td class="${task.done ? 'done' : ''}">${task.deadline}</td>
+                    <td>
+                        <input type="checkbox" ${task.done ? "checked" : ""} 
+                        onclick="toggleTask(${index})">
+                    </td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteTask(${index})">X</button>
+                    </td>
+                </tr>
+            `;
+
+            list.innerHTML += row;
+        });
+    }
+
+    renderTasks();
+</script>
+
+</body>
+</html>
